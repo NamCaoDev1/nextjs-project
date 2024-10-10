@@ -5,14 +5,14 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import envConfig from "@/app/config";
 import Link from "next/link";
 
-export interface Product {
+interface Product {
   id: number;
   image?: string;
   name?: string;
   price?: number;
 }
 
-const FeaturedProduct = async () => {
+const FeaturedProduct2 = async () => {
   const productRes = await fetch(
     `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/products`,
   );
@@ -55,13 +55,12 @@ const FeaturedProduct = async () => {
                 <p className="text-sm text-gray-500">${product.price}</p>
                 <div className="flex items-center justify-between w-full mt-4">
                   <Button className="w-full mr-2">Add to cart</Button>
-                  <Link href={`/products/${product.id}`} className="block">
+                  <Link href={`/products/${product.id}`}>
                     <Button variant="outline" size="icon">
                       <Eye className="h-4 w-4" />
                       <span className="sr-only">View product</span>
                     </Button>
                   </Link>
-                 
                 </div>
               </CardFooter>
             </Card>
@@ -76,4 +75,4 @@ const FeaturedProduct = async () => {
   );
 };
 
-export default FeaturedProduct;
+export default FeaturedProduct2;

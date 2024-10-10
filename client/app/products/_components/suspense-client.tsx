@@ -10,9 +10,11 @@ const testPromise = (): Promise<number> => {
   });
 };
 
-const StreamingClient = () => {
+const SuspenseClient = () => {
   const result = use(testPromise());
-  return <div>StreamingClient {result}</div>;
+  // const data = window.localStorage.getItem('nam') || '';
+  // console.log('Data', data)
+  return <div>SuspenseClient {result}</div>;
 };
 
-export default StreamingClient;
+export default SuspenseClient;

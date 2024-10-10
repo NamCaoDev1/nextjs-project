@@ -1,42 +1,18 @@
+import { Product } from '@/app/products/_components/featured-product'
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Eye } from "lucide-react";
+import {  Eye } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import envConfig from "@/app/config";
 import Link from "next/link";
 
-export interface Product {
-  id: number;
-  image?: string;
-  name?: string;
-  price?: number;
+interface ProductWithProps {
+  products: Product[]
 }
 
-const FeaturedProduct = async () => {
-  const productRes = await fetch(
-    `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/products`,
-  );
-  const productResJson = await productRes.json();
-  const productList = productResJson.data;
+const ProductWithProps: React.FC<ProductWithProps> = ({products}) => {
   return (
-    <section className="w-full py-12">
-      <div className="container px-4 md:px-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Featured products
-            </h2>
-            <p className="mt-2 text-gray-500">
-              Explore products from around the world
-            </p>
-          </div>
-          <Button variant="ghost" className="hidden sm:flex">
-            View all products
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-        <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-4">
-          {productList.map((product: Product, index: number) => (
+    <div>
+         {products.map((product: Product, index: number) => (
             <Card key={index} className="overflow-hidden">
               <CardContent className="p-0">
                 <Image
@@ -66,14 +42,8 @@ const FeaturedProduct = async () => {
               </CardFooter>
             </Card>
           ))}
-        </div>
-        <Button variant="ghost" className="mt-8 sm:hidden">
-          View all products
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-    </section>
-  );
-};
+    </div>
+  )
+}
 
-export default FeaturedProduct;
+export default ProductWithProps
