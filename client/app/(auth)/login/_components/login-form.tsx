@@ -5,10 +5,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useEffect } from "react";
-import { handleLogin, testAction } from "../_data/login-action";
+import { handleLogin } from "../_data/login-action";
 import { useFormState, useFormStatus } from "react-dom";
 import { LoginSchemaType, LoginStatus } from "../_data/login-schema";
 import { cn } from "@/lib/utils";
+import { redirect, RedirectType } from "next/navigation";
 
 export type FormState = {
   status: LoginStatus;
@@ -37,12 +38,11 @@ const LoginForm = () => {
   );
 
   useEffect(() => {
-    const testClientAction = async () => {
-      const result = await testAction();
-      console.log("Result 1", result);
-    };
-    testClientAction();
-  }, []);
+    if (state.status === LoginStatus.Success) {
+      redirect("/me", RedirectType.push);
+    }
+  }, [state.status]);
+
   return (
     <form action={formAction}>
       <div className="space-y-4">
@@ -80,15 +80,6 @@ const LoginForm = () => {
         </p>
       )}
       <SubmitButton />
-      <Button
-        type="button"
-        onClick={async () => {
-          const result = await testAction();
-          console.log("Result", result);
-        }}
-      >
-        Test
-      </Button>
     </form>
   );
 };

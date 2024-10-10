@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import LoginForm from "./_components/login-form";
-import LoginTestClient from "./_components/login-test-client";
 
 export default function LoginPage() {
   return (
@@ -38,7 +37,7 @@ export default function LoginPage() {
             </Link>
           </div>
         </CardFooter>
-        <LoginTestClient />
+        {/* <LoginTestClient /> */}
       </Card>
     </div>
   );
