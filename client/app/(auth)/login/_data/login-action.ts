@@ -3,7 +3,7 @@
 import envConfig from "@/app/config";
 import { loginSchema, LoginStatus } from "./login-schema";
 import { FormState } from "../_components/login-form";
-
+import { setSession } from "@/lib/auth";
 const testAction = () => {
   console.log("Fetch in server");
   return 0;
@@ -46,6 +46,7 @@ async function handleLogin(
     if (resultJson.statusCode === 422) {
       throw new Error(resultJson.message);
     }
+    setSession(resultJson.data.token, resultJson.data.expiresAt);
     return {
       message: `Login Successfully ${resultJson.message}`,
       status: LoginStatus.Success,
