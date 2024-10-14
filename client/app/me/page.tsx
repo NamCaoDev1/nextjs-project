@@ -1,6 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
-import envConfig from "../config";
 import ProfileNav from "./_components/profile-nav";
 import ProfileFormTab from "./_components/profile-form-tab";
 import ProfileAccountFormTab from "./_components/profile-account-form-tab";
@@ -13,18 +12,14 @@ export interface Profile {
   id: number;
 }
 
+
 const ProfilePage = async () => {
-  const session = await getSession();
   const profileRes = await fetch(
-    `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/account/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${session}`,
-      },
-    }
+    `http://localhost:3000/api/account/me`
   ).then((res) => res.json());
+  console.log('Profiel res', profileRes)
   if (profileRes.statusCode === 401) {
-    return <div>Authenticate not yet!!</div>;
+    return <div>Authenticate not yet!! <><ProfileNav /></></div>;
   }
   return (
     <div className="flex flex-col min-h-screen">

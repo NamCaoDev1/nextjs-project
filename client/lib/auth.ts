@@ -5,6 +5,7 @@ export async function setSession(session: string, expiresAt: string) {
   cookies().set("session", session, {
     expires: new Date(expiresAt),
     httpOnly: true,
+    path: '/'
   });
 }
 
