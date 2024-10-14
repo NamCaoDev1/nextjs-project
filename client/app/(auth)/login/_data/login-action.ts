@@ -1,9 +1,9 @@
 "use server";
 
-import envConfig from "@/app/config";
 import { loginSchema, LoginStatus } from "./login-schema";
 import { FormState } from "../_components/login-form";
-import { setSession } from "@/lib/auth";
+import { setSession } from "@/lib/normal-auth";
+import envConfig from "@/app/config";
 const testAction = () => {
   console.log("Fetch in server");
   return 0;
@@ -28,10 +28,9 @@ async function handleLogin(
 
   const data = safeParseData.data;
 
-  console.log("Data", data);
-
   // mutate data
   try {
+    // const result = await signIn("credentials", { ...data });
     const result = await fetch(
       `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/login`,
       {
@@ -46,9 +45,10 @@ async function handleLogin(
     if (resultJson.statusCode === 422) {
       throw new Error(resultJson.message);
     }
+    console.log("Result login", resultJson);
     setSession(resultJson.data.token, resultJson.data.expiresAt);
     return {
-      message: `Login Successfully ${resultJson.message}`,
+      message: `Login Successfully`,
       status: LoginStatus.Success,
     };
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

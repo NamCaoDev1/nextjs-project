@@ -4,7 +4,11 @@ import ProfileNav from "./_components/profile-nav";
 import ProfileFormTab from "./_components/profile-form-tab";
 import ProfileAccountFormTab from "./_components/profile-account-form-tab";
 import ProfileNotificationTab from "./_components/profile-notification-tab";
-import { getSession } from "@/lib/auth";
+import ProfileClient from "./_components/profile-client";
+import { Suspense } from "react";
+import { getSession } from "@/lib/normal-auth";
+import envConfig from "../config";
+// import { getSession } from "@/lib/auth";
 
 export interface Profile {
   name: string;
@@ -12,14 +16,30 @@ export interface Profile {
   id: number;
 }
 
-
 const ProfilePage = async () => {
+  const sessionCookie = await getSession();
   const profileRes = await fetch(
-    `http://localhost:3000/api/account/me`
+    `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/account/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${sessionCookie}`,
+      },
+    }
   ).then((res) => res.json());
-  console.log('Profiel res', profileRes)
+
   if (profileRes.statusCode === 401) {
-    return <div>Authenticate not yet!! <><ProfileNav /></></div>;
+    return (
+      <div>
+        Authenticate not yet!!{" "}
+        <>
+          <ProfileNav />
+
+          <Suspense fallback="Loading profile....">
+            <ProfileClient />
+          </Suspense>
+        </>
+      </div>
+    );
   }
   return (
     <div className="flex flex-col min-h-screen">

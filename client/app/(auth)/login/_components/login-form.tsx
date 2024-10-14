@@ -9,7 +9,7 @@ import { handleLogin } from "../_data/login-action";
 import { useFormState, useFormStatus } from "react-dom";
 import { LoginSchemaType, LoginStatus } from "../_data/login-schema";
 import { cn } from "@/lib/utils";
-import { redirect, RedirectType } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export type FormState = {
   status: LoginStatus;
@@ -32,6 +32,7 @@ function SubmitButton() {
 }
 
 const LoginForm = () => {
+  const router = useRouter();
   const [state, formAction] = useFormState<FormState, FormData>(
     handleLogin,
     initialState
@@ -39,9 +40,10 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (state.status === LoginStatus.Success) {
-      redirect("/me", RedirectType.push);
+      router.push("/me");
+      router.refresh();
     }
-  }, [state.status]);
+  }, [state.status, router]);
 
   return (
     <form action={formAction}>

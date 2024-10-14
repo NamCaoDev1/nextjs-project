@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import LoginForm from "./_components/login-form";
 
-export default function LoginPage() {
+export default async function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-full max-w-md">
