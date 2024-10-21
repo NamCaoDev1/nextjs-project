@@ -15,6 +15,7 @@ export default async function accountRoutes(fastify: FastifyInstance, options: F
       }
     },
     async (request, reply) => {
+      console.log('Query to me api', Math.random())
       reply.send({
         data: request.account!,
         message: 'Lấy thông tin thành công'

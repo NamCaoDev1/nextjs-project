@@ -2,7 +2,7 @@ import prisma from '@/database'
 import { CreateProductBodyType, UpdateProductBodyType } from '@/schemaValidations/product.schema'
 
 export const getProductList = () => {
-  console.log('Request to here', Math.random() * 100)
+  console.log('Request to products', Math.random() * 100)
   return prisma.product.findMany({
     orderBy: {
       createdAt: 'desc'
