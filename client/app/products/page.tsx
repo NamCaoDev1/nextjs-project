@@ -5,7 +5,7 @@ import FeaturedProduct from "./_components/featured-product";
 // import StreamingComponent2 from "./_components/streaming-component-2";
 // import { Suspense } from "react";
 // import SuspenseClient from "./_components/suspense-client";
-import FeaturedProduct2 from "@/app/products/_components/featured-product-2";
+import FeaturedProductSuspense from "@/app/products/_components/featured-product-suspense";
 
 export const metadata: Metadata = {
   title: "Danh sách sản phẩm",
@@ -16,7 +16,7 @@ export default async function ProductListPage() {
   return (
     <section className="w-full py-12">
       <FeaturedProduct />
-      <FeaturedProduct2 />
+      <FeaturedProductSuspense />
       {/* <ProductWithProps products={productList} /> */}
       {/* <Suspense fallback="Loading....1">
         <StreamingComponent />

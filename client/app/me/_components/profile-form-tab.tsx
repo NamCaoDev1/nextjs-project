@@ -3,13 +3,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import React from "react";
-import { Profile } from "../page";
+import { getSession } from "@/lib/normal-auth";
+import envConfig from "@/app/config";
 
-interface ProfileFormTabProps {
-  defaultValues: Profile;
-}
-
-const ProfileFormTab: React.FC<ProfileFormTabProps> = ({ defaultValues }) => {
+const ProfileFormTab: React.FC = async () => {
+  const sessionCookie = await getSession();
+  const profileRes = await fetch(
+    `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/account/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${sessionCookie}`,
+      },
+    }
+  ).then((res) => res.json());
   return (
     <>
       <div className="grid gap-4">
@@ -21,11 +27,11 @@ const ProfileFormTab: React.FC<ProfileFormTabProps> = ({ defaultValues }) => {
         </div>
         <div className="grid gap-2">
           <Label htmlFor="name">Name</Label>
-          <Input id="name" defaultValue={defaultValues.name} />
+          <Input id="name" defaultValue={profileRes.data.name} />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" defaultValue={defaultValues.email} />
+          <Input id="email" defaultValue={profileRes.data.email} />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="bio">Bio</Label>
